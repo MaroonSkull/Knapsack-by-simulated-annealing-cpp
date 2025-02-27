@@ -1,0 +1,175 @@
+openapi: 3.1.1
+info:
+  title: Knapsack Problem API
+  version: 1.0.0
+  description: Blazingly fast C++ API for solving knapsack problem using simulated annealing algorithm
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+tags:
+  - name: Knapsack Solver
+    description: Operations related to solving knapsack problems
+  - name: History
+    description: Operations related to solution history
+
+paths:
+  /solve:
+    post:
+      tags:
+        - Knapsack Solver
+      summary: Solve knapsack problem
+      description: Returns optimal set of items for given capacity using simulated annealing
+      operationId: solveKnapsack
+      requestBody:
+        description: Knapsack problem definition
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnapsackProblem'
+      responses:
+        '200':
+          description: Successful solution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnapsackSolution'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /history:
+    get:
+      tags:
+        - History
+      summary: Get solution history
+      description: Returns list of all previous solutions
+      operationId: getHistory
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/History'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Item:
+      type: object
+      required:
+        - weight
+        - value
+      properties:
+        weight:
+          type: number
+          format: double
+          minimum: 0
+          exclusiveMinimum: true
+          example: 5.5
+          description: Item weight in arbitrary units
+        value:
+          type: number
+          format: double
+          minimum: 0
+          example: 10.0
+          description: Item value in arbitrary units
+      additionalProperties: false
+
+    KnapsackProblem:
+      type: object
+      required:
+        - capacity
+        - items
+      properties:
+        capacity:
+          type: number
+          format: double
+          minimum: 0
+          exclusiveMinimum: true
+          example: 15.0
+          description: Maximum knapsack capacity
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Item'
+          example:
+            - weight: 3.5
+              value: 7.0
+            - weight: 5.0
+              value: 12.5
+      additionalProperties: false
+
+    KnapsackSolution:
+      type: object
+      required:
+        - total_value
+        - items
+      properties:
+        total_value:
+          type: number
+          format: double
+          minimum: 0
+          example: 19.5
+          description: Total value of selected items
+        total_weight:
+          type: number
+          format: double
+          minimum: 0
+          example: 8.5
+          description: Total weight of selected items
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+          description: Selected items for optimal solution
+      additionalProperties: false
+
+    HistoryEntry:
+      type: object
+      required:
+        - request
+        - solution
+        - created_at
+      properties:
+        request:
+          $ref: '#/components/schemas/KnapsackProblem'
+        solution:
+          $ref: '#/components/schemas/KnapsackSolution'
+        created_at:
+          type: string
+          format: date-time
+          example: "2024-01-20T14:23:45Z"
+          description: Solution timestamp in UTC
+      additionalProperties: false
+
+    History:
+      type: array
+      items:
+        $ref: '#/components/schemas/HistoryEntry'
+
+    Error:
+      type: object
+      required:
+        - code
+        -
