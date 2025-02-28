@@ -33,26 +33,15 @@ RUN pacman -S --noconfirm \
 		ninja \
 		git \
 		sudo \
-		ccache
+		ccache \
+		openssh
 
 RUN pacman -Sy --noconfirm \
-		mesa \
-		glad \
-		boost \
-		spdlog \
-		glfw \
-		glm
+		npm \
+		jre11-openjdk-headless \
+		icu
+RUN npm install @openapitools/openapi-generator-cli -g
 
-# WORKDIR /home/${USERNAME}/TFCADIR
-#WORKDIR $WORKSPACE
-
-#COPY ../ .
-
-# [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
 
 CMD [ "/bin/bash" ]
-
-# RUN git submodule update --init --recursive
-# RUN cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug build
-# RUN cmake -B build -S . -j$(nproc)
