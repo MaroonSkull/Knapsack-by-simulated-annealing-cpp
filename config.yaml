@@ -1,13 +1,11 @@
-generatorName: cpp-restsdk
+generatorName: cpp-restbed-server
 additionalProperties:
   apiPackage: api
   modelPackage: models
   packageName: KnapsackAPI
   packageVersion: 1.0.0
   projectName: knapsack-api
-  # Для интеграции с userver можно использовать cpprestsdk в качестве базового
   cppNamespace: knapsack::api
-  # Дополнительные настройки
   useStructModel: "true"
   sortParamsByRequiredFlag: "true"
   optionalProjectFile: "true"
