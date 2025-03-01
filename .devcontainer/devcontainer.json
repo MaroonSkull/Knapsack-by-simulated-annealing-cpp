@@ -1,8 +1,8 @@
 {
   "name": "Knapsack Dev Container",
   "build": {
-    "dockerfile": "../Dockerfile",
-    //"context": "..",
+    "dockerfile": "Dockerfile",
+    "context": "..",
     "args": {
       "USERNAME": "${localEnv:USER}",
       "WORKSPACE": "${localWorkspaceFolder}",
