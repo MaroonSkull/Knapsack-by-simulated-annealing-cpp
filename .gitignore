@@ -2,6 +2,7 @@
 build/
 .cache/
 .42c/
+external/
 
 # Compiled Object files
 *.slo
