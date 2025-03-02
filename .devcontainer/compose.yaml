@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  knapsack-dev-container:
+    build:
+      dockerfile: Dockerfile
+      args:
+        USERNAME: ${USERNAME}
+        GROUPNAME: ${GROUPNAME}
+        USER_UID: ${USER_UID}
+        USER_GID: ${GROUP_GID}
+        WORKSPACE: ${WORKSPACE}
+        PACKAGE_MANAGER: ${PACKAGE_MANAGER}
+    user: "${USERNAME}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${WORKSPACE}:${WORKSPACE}:cached
+    ports:
+      - "8000:8000"
+      - "5432:5432"
+    env_file: .env
