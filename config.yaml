@@ -1,12 +1,4 @@
-generatorName: cpp-restbed-server
+generatorName: cpp-pistache-server
 additionalProperties:
-  apiPackage: api
-  modelPackage: models
-  packageName: KnapsackAPI
-  packageVersion: 1.0.0
-  projectName: knapsack-api
-  cppNamespace: knapsack::api
-  useStructModel: "true"
-  sortParamsByRequiredFlag: "true"
-  optionalProjectFile: "true"
-  modelNameSuffix: Dto
+  variableNameFirstCharacterUppercase: false
+  enablePostProcessFile: true
